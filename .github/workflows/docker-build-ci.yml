@@ -21,16 +21,17 @@ jobs:
         run: echo "dirs=$(ls -d images/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
 
   build:
+    needs: collect_dirs
     strategy:
       matrix:
         os: [ubuntu-latest]
-        # dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
+        dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
 
     runs-on: ${{ matrix.os }}
         
     steps:
     - uses: actions/checkout@v3
-    - run: echo ${{ needs.collect_dirs.outputs.dirs }}
+    - run: echo ${{ matrix.dir }}
     # - name: Build the Docker images
     #   working-directory: ${{ matrix.dir }}
     #   run: docker build . -t $(pwd |rev |cut -d "/" -f 1 |rev):$(date +%s)
