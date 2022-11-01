@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM --platform=x86_64 ubuntu
 ARG AWSCLI_URL=https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.1.24.zip
 
 RUN apt-get update \

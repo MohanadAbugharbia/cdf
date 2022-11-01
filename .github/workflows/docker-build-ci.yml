@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    paths:
+      - images/*
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker images
+      run: docker build images/*/ --file Dockerfile --tag my-image-name:$(date +%s)
+        
