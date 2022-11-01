@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        dir: ${{ fronJson(needs.collect_dirs.outputs.dirs) }}
+        dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
 
     runs-on: ${{ matrix.os }}
     
