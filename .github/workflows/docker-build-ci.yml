@@ -1,0 +1,35 @@
+name: Build Docker images
+
+on:
+  push:
+    paths:
+      - images/**
+      - .github/workflows/docker-build-ci.yml
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  collect_dirs:
+    runs-on: ubuntu-latest
+    outputs:
+      dirs: ${{ steps.dirs.outputs.dirs }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Collect image directories
+        id: dirs
+        run: echo "dirs=$(ls -d images/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+
+  build:
+    needs: collect_dirs
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker images
+      working-directory: ${{ matrix.dir }}
+      run: docker build . -t $(echo ${{ matrix.dir }} |rev |cut -d "/" -f 1 |rev):$(date +%s)
+        
