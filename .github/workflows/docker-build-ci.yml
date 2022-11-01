@@ -16,15 +16,17 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         dir: 
-          - images/**
+          - images/*
         
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker images
-      run: |
-        cd images
-        for folder in *;
-        do
-        docker build $folder -t $folder:$(date +%s)
-        done
+      run: pwd
+    # - name: Build the Docker images
+    #   run: |
+    #     cd images
+    #     for folder in *;
+    #     do
+    #     docker build $folder -t $folder:$(date +%s)
+    #     done
         
