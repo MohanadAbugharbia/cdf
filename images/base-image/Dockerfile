@@ -31,3 +31,4 @@ RUN gem install cfn-nag
 RUN curl https://static.snyk.io/cli/latest/snyk-alpine -o snyk \
     && chmod +x ./snyk \
     && mv ./snyk /usr/local/bin/
+
