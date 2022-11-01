@@ -10,24 +10,33 @@ on:
       - main
 
 jobs:
+  collect_dirs:
+    runs-on: ubuntu-latest
+    outputs:
+      dirs: ${{ steps.dirs.outputs.dirs }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Collect image directories
+        id: dirs
+        run: echo "::set-output name=dirs::$(ls -d images/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')"
+
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        dir: 
-          - images/*
+        dir: ${{ fronJson(needs.collect_dirs.outputs.dirs) }}
+
+    runs-on: ${{ matrix.os }}
+    
         
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3     
     - name: Build the Docker images
       working-directory: ${{ matrix.dir }}
-      run: pwd
-    # - name: Build the Docker images
-    #   run: |
-    #     cd images
-    #     for folder in *;
-    #     do
-    #     docker build $folder -t $folder:$(date +%s)
-    #     done
+      run: docker build . -t $(pwd |rev |cut -d "/" -f 1 |rev):$(date +%s)
+        # cd images
+        # for folder in *;
+        # do
+        # docker build $folder -t $folder:$(date +%s)
+        # done
         
