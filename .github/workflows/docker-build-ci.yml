@@ -30,7 +30,7 @@ jobs:
         
     steps:
     - uses: actions/checkout@v3
-    - run: echo ${{ collect_dirs.outputs.dirs }}
+    - run: echo ${{ needs.collect_dirs.outputs.dirs }}
     # - name: Build the Docker images
     #   working-directory: ${{ matrix.dir }}
     #   run: docker build . -t $(pwd |rev |cut -d "/" -f 1 |rev):$(date +%s)
