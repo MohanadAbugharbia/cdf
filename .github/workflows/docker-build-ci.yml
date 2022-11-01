@@ -24,18 +24,19 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
+        # dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
 
     runs-on: ${{ matrix.os }}
         
     steps:
-    - uses: actions/checkout@v3     
-    - name: Build the Docker images
-      working-directory: ${{ matrix.dir }}
-      run: docker build . -t $(pwd |rev |cut -d "/" -f 1 |rev):$(date +%s)
-        # cd images
-        # for folder in *;
-        # do
-        # docker build $folder -t $folder:$(date +%s)
-        # done
+    - uses: actions/checkout@v3
+    - run: echo ${{ collect_dirs.outputs.dirs }}
+    # - name: Build the Docker images
+    #   working-directory: ${{ matrix.dir }}
+    #   run: docker build . -t $(pwd |rev |cut -d "/" -f 1 |rev):$(date +%s)
+    #     # cd images
+    #     # for folder in *;
+    #     # do
+    #     # docker build $folder -t $folder:$(date +%s)
+    #     # done
         
