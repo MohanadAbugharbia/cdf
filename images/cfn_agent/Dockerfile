@@ -14,4 +14,3 @@ RUN curl -sL ${AWSCLI_URL} -o awscliv2.zip \
     /usr/local/aws-cli/v2/*/dist/awscli/data/ac.index \
     /usr/local/aws-cli/v2/*/dist/awscli/examples
 
-
