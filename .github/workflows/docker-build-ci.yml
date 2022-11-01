@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Collect image directories
         id: dirs
-        run: echo "{name}=dirs::$(ls -d images/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+        run: echo "dirs=$(ls -d images/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
 
   build:
     strategy:
@@ -27,7 +27,6 @@ jobs:
         dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
 
     runs-on: ${{ matrix.os }}
-    
         
     steps:
     - uses: actions/checkout@v3     
