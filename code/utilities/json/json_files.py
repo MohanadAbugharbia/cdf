@@ -1,7 +1,7 @@
 import json
 import os
 
-def import_json_file(file: str) -> dict | list:
+def import_json_file(file: str) -> dict:
     if os.stat(file).st_size == 0:
         return {}
     with open(file, "r") as file_object:
