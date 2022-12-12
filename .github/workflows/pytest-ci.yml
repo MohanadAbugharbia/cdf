@@ -31,5 +31,5 @@ jobs:
       - name: Upload coverage data
         uses: actions/upload-artifact@v1
         with:
-          name: coverage-$(echo ${{ matrix.os }}-python-$(echo ${{ matrix.python-version }})
+          name: coverage-${{ matrix.os }}-python-${{ matrix.python-version }}
           path: .coverage
