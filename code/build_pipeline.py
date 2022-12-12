@@ -23,7 +23,6 @@ from aws_cdk import (
     aws_codepipeline as codepipeline,
     aws_codepipeline_actions as codepipeline_actions,
     aws_codecommit as codecommit,
-    aws_iam as iam,
     aws_s3 as s3,
     SecretValue,
 )
@@ -46,7 +45,7 @@ class build_pipeline(Stack):
         # Build Buckets
         reports_bucket = s3.Bucket(self, "reportsbucket")
         source_bucket = s3.Bucket(self, "sourcebucket")
-       
+        print(f"{ self.resolve(source_bucket.bucket_name) = }")
         # Build Pipeline Stages
         stages = self.set_stages()
 
